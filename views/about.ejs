@@ -1,0 +1,31 @@
+<%- include('./shared/header') %>
+
+    <h1>À porpos</h1>
+    <div class="img">
+        <img src="/images/person.png" alt="image illustant une personne qui se présente">
+    </div>
+    
+    <p class="name"> 
+        <%= firstName %> <%= lastName %>
+    </p>
+    
+    <p class="bold">Date de naissance : 
+        <span> 
+            <%= birthDate.toLocaleDateString() %> 
+        </span>
+    </p>
+
+    <p class="bold">Cours préférés : </p>
+    <ul>
+        <% for(const c of cours) { %>
+            <li class="bullet">
+                <span> 
+                    <%= c %> 
+                </span>
+            </li>
+        <% } %>
+    </ul>
+
+   
+
+<%- include('./shared/footer') %>

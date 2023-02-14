@@ -36,14 +36,15 @@ const app = http.createServer((req, res) => {
     // method de la requête (get ou posr)
     const requestMethod = req.method;
 
-    console.log(requestUrl);
-    console.log(requestQuery);
-    console.log(requestMethod);
+    // console.log(requestUrl);
+    // console.log(requestQuery);
+    // console.log(requestMethod);
 
     // Gestion du dossier public et des différents types de fichiers
     // Création du path
     const filePublic = path.resolve('public' + requestUrl);
-    console.log('Searching file : ', filePublic);
+    // console.log('Searching file : ', filePublic);
+
     // Si la route n'est pas '/' et si le fichier existe bien
     if(requestUrl !== '/' && fs.existsSync(filePublic)) {
         // On lit le fichier
@@ -55,7 +56,7 @@ const app = http.createServer((req, res) => {
         // path.extname(pathFichier) -> renvoie l'extension du fichier
         // on fait un replace pour enlever le . devant l'extension
         const extension = path.extname(filePublic).replace('.', '');
-        console.log(extension);
+        // console.log(extension);
 
         // Selon l'extension : traitement
         let contentType = '';
@@ -131,7 +132,7 @@ const app = http.createServer((req, res) => {
 
             // Rendu ejs
             // Récupération du chemin vers le fichier ejs
-            const filename = path.resolve('views', 'contact.ejs')
+            const filename = path.resolve('views', 'contact.ejs');
             ejs.renderFile(filename, (err, render) => {
                 if (err) {
                     console.log(err);
@@ -171,6 +172,36 @@ const app = http.createServer((req, res) => {
                 })
                 res.end();
             })
+        }
+    }
+    else if ( requestUrl === '/about' ) {
+        // console.log(requestUrl);
+        if ( requestMethod === 'GET' ) {
+            console.log('Bienvenue sur la About Page !');
+
+            const person = {   
+                lastName: 'Gérard', 
+                firstName: 'Carole',
+                gender: 'F',
+                birthDate: new Date(1978, 2, 16),
+                cours: ['Algorithme', 'React', 'Node', 'Angular']
+            };
+                
+
+            const filename = path.resolve('views', 'about.ejs');
+            ejs.renderFile(filename, person, (err, render) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log('Rendu About Page effectué !');
+                // Envoi de la réponse
+                res.writeHead(200, {
+                    "Content-type" : "text/html"  
+                })
+                res.end(render);
+            })
+
         }
     }
     else {

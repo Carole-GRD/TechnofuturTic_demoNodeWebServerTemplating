@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .txt-red {
@@ -20,6 +21,9 @@ body {
 }
 
 nav {
+    position: fixed;
+    top: 0;
+    z-index: 1;
     width: 100vw;
     height: 10vh;
     background-color: lightgrey;
@@ -30,13 +34,49 @@ nav ul {
 }
 
 footer {
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100vw;
     height: 10vh;
     background-color: lightgrey;
 }
 
+
+
 main {
-    padding: 2% 5%;
+    position: absolute;
+    top: 10vh;
+    padding: 1vh 5%;
     width: 100vw;
-    height: 80vh;
+    height: 100vh;
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+img {
+    width: 40vw;
+}
+
+.name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: palevioletred;
+}
+
+.bullet {
+        list-style-type: "✔";
+}
+span {
+    padding-left: 2%;
+    font-weight: 400;
+}
+.bold {
+    font-weight: 600;
 }
