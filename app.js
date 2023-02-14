@@ -11,6 +11,10 @@ const http = require('http');
 const url = require('url');
 // Import du module 'querystring' permettant de parser les datas de notre POST
 const querystring = require('querystring');
+// Import du module 'ejs' permettant de générer du html
+const ejs = require('ejs');
+// Import du module 'path' permettant de faciliter la génération de chemins
+const path = require('path');
 
 
 // Création du server
@@ -45,88 +49,62 @@ const app = http.createServer((req, res) => {
             { firstname: 'Pierre', lastname: 'Santos' },
             { firstname: 'Aurelien', lastname: 'Strimelle' }
         ]
-        let acc2 ='';
-        trainers.forEach(trainer => {
-            acc2 += `<li>${trainer.firstname} ${trainer.lastname}</li>`;
-            return acc2;
-        })
 
+        // Utilisation d'ejs pour rendre la vue
+            // Génération du path
+            const filename = path.resolve('views', 'home.ejs');
+            // Création des datas àenvoyer à la vue
+            // const data = {
+            //     today : today,
+            //     trainers : trainers
+            // }
+            // ↕ raccourci
+            const data = { today, trainers }  
+            // ↑ On fournit un objet qui contient today et notre tableau de formateurs
+            // Rendu de la vue
+            // renderFile :
+                // 1er param : chemin vers le fichier ejs
+                // 2e param : Data à lui envoyer
+                // 3eparam : Callback (err, render) {}
+                    // err -> si erreur lors du rendu (fichier introuvable, autre)
+                    // render -> si pas d'erreur, le rendu se trouvedans render
+            // A partir du chemin, des datas, on renvoi une chaine qui contient tout le html à afficher
+            ejs.renderFile(filename, data, (err, render) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log('Rendu Home Page effectué !');
+                // console.log(render);
+                // Envoi de la réponse (res -> response)
+                    // Contenant la "vue" à afficher
+                res.writeHead(200, {
+                    "Content-type" : "text/html"  // On précise qu'on renvoie du html
+                })
+                res.end(render); // On termine la requête en fournissant les donnéesà afficher dans la réponse
 
-        // Création de la "vue" à afficher
-        const contentHome = `
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Mon super site</title>
-            </head>
-            <body>
-                <h1>Bienvenue sur la page d'accueil ✨</h1>
-                <h2>Nous sommes le ${today} </h2>
-                <ul>
-                    ${ trainers.reduce( (acc, trainer) => {
-                        acc += `<li>${trainer.firstname} ${trainer.lastname}</li>`;
-                        return acc;
-                    }, '' ) }
-                </ul>
-                <ul>
-                    ${acc2}
-                </ul>
-
-                <a href="/contact">Contactez-moi ✉</a>
-            </body>
-            </html>
-        `;
-
-        // Envoi de la réponse (res -> response)
-            // Contenant la "vue" à afficher
-        res.writeHead(200, {
-            "Content-type" : "text/html"  // On précise qu'on renvoie du html
-        })
-        res.end(contentHome); // On termine la requête en fournissant les donnéesà afficher dans la réponse
-
+            })
     }
     else if ( requestUrl === '/contact' ) {
         if ( requestMethod === 'GET' ) {
             // Contact Papge
             console.log('Bienvenue sur la Contact Page');
 
-            // Création du contenu html
-            const contentContact = `
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Contact</title>
-                </head>
-                <body>
-                    <h1>Formulaire de contact 📫</h1>
-                    <form method="POST">
-                        <div>
-                            <label for="pseudo">Votre Pseudo : </label>
-                            <input id="pseudo" name="pseudo" type="text" />
-                        </div>
-                        <div>
-                            <label for="msg">Votre message : </label>
-                            <textarea id="msg" name="msg"></textarea>
-                        </div>
-                        <button type="submit">Envoyer 📩</button>
-                        <!-- <input type="submit" value="Envoyer 📩" /> -->
-                    </form>
-                </body>
-                </html>
-            `; 
-
-            // Envoi de la réponse
-            res.writeHead(200, {
-                "Content-type" : "text/html"  
-            })
-            res.end(contentContact);
-
+            // Rendu ejs
+            // Récupération du chemin vers le fichier ejs
+            const filename = path.resolve('views', 'contact.ejs')
+            ejs.renderFile(filename, (err, render) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log('Rendu Contact Page effectué !');
+                // Envoi de la réponse
+                res.writeHead(200, {
+                    "Content-type" : "text/html"  
+                })
+                res.end(render);
+            })  
         }
         else if ( requestMethod === 'POST') {
             // Récupération du form Contact
@@ -159,25 +137,18 @@ const app = http.createServer((req, res) => {
     else {
         // route inexistante
         // Page 404
-        const content404 = `<!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Contact</title>
-        </head>
-        <body>
-            <h1>Erreur 404 🤔</h1>
-           
-        </body>
-        </html>
-    `; 
-        console.log('Erreur 404');
-        res.writeHead(200, {
-            "Content-type" : "text/html"
-        });
-        res.end(content404);
+        const filename = path.resolve('views', 'notfound.ejs');
+        ejs.renderFile(filename, (err, render) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            console.log('Erreur 404');
+            res.writeHead(200, {
+                "Content-type" : "text/html"
+            });
+            res.end(render);
+        })  
     }
 });
 
