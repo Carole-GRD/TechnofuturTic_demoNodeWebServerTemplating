@@ -15,6 +15,9 @@ const querystring = require('querystring');
 const ejs = require('ejs');
 // Import du module 'path' permettant de faciliter la génération de chemins
 const path = require('path');
+// Import du moduel 'file system' pour gérer les fichiers
+const fs = require('fs');
+
 
 
 // Création du server
@@ -37,7 +40,43 @@ const app = http.createServer((req, res) => {
     console.log(requestQuery);
     console.log(requestMethod);
 
-    // Définition des différents comportements en fonction des routes et de la méthode
+    // Gestion du dossier public et des différents types de fichiers
+    // Création du path
+    const filePublic = path.resolve('public' + requestUrl);
+    console.log('Searching file : ', filePublic);
+    // Si la route n'est pas '/' et si le fichier existe bien
+    if(requestUrl !== '/' && fs.existsSync(filePublic)) {
+        // On lit le fichier
+        const file = fs.readFileSync(filePublic);
+        // console.log(file);
+
+        // On récupère l'extension du fichier
+        // console.log(filePublic);
+        // path.extname(pathFichier) -> renvoie l'extension du fichier
+        // on fait un replace pour enlever le . devant l'extension
+        const extension = path.extname(filePublic).replace('.', '');
+        console.log(extension);
+
+        // Selon l'extension : traitement
+        let contentType = '';
+        if (['gif', 'png', 'jpeg', 'bmp', 'webp', 'svg'].includes(extension)) {
+            contentType = 'image/' + extension;
+        }
+        else  if (extension === 'css') {
+            contentType = 'text/css'
+        }
+        // Envoi de la réponse
+        res.writeHead(200, {
+            "Content-type" : contentType
+        });
+        // On envoie le fichier dans la réponse,
+        // Si c'était une image, elle sera traitée comme telle puisque dans Content-type il y a 'image/[extension]'
+        // Si c'était du css, il sera traité comme tel puisque dans Content-type il y a 'txt/css'
+        res.end(file);
+        return
+    }
+
+    // Définition des différents comportements en fonction des routes(url) et de la méthode
     if ( requestUrl === '/' && requestMethod === 'GET' ) {
         // Home page
         console.log('Bienvenue sur la Home Page !');
