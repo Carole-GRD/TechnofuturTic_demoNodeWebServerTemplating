@@ -73,7 +73,7 @@ const app = http.createServer((req, res) => {
         // Si c'était une image, elle sera traitée comme telle puisque dans Content-type il y a 'image/[extension]'
         // Si c'était du css, il sera traité comme tel puisque dans Content-type il y a 'txt/css'
         res.end(file);
-        return
+        return;
     }
 
     // Définition des différents comportements en fonction des routes(url) et de la méthode
