@@ -1,0 +1,25 @@
+ //////// Pour créer un gitignore automatiquement ////////
+    
+    Installer l'extension gitignore de CodeZombie
+    Avec le projet ouvert :
+    Appuyer sur F1 ou Ctrl + Maj + P pour ouvrir les options
+    Commencez à taper gitignore et selectionnez "Add gitignore"
+    Commencez à taper "node" dans la barre et selectionnez node en type de projet (Node.gitignore)
+    TADA !
+
+
+
+
+ //////// nodemon - npm ////////
+
+    Installation : npm install --sav-dev nodemon
+
+    Ajout du script dev dans le package.json   ->   "dev":"nodemon app.js"
+
+    Pour lancer le terminal                    ->    npm run dev
+    Pour fermer le terminal                    ->    Ctrl + c    
+
+
+ //////// dotenv - npm ////////
+
+    Installation : npm install --save-dev dotenv
