@@ -55,28 +55,3 @@ main {
     height: 100vh;
 }
 
-.img {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-img {
-    width: 40vw;
-}
-
-.name {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: palevioletred;
-}
-
-.bullet {
-        list-style-type: "✔";
-}
-span {
-    padding-left: 2%;
-    font-weight: 400;
-}
-.bold {
-    font-weight: 600;
-}

@@ -81,7 +81,8 @@ const app = http.createServer((req, res) => {
     if ( requestUrl === '/' && requestMethod === 'GET' ) {
         // Home page
         console.log('Bienvenue sur la Home Page !');
-
+        const title = 'Accueil';
+        const pageCSS = '/styles/home.css';
         // Création des données à afficher
         const today = new Date().toLocaleDateString('fr-be', { dateStyle: 'long' });
         const trainers = [
@@ -99,7 +100,7 @@ const app = http.createServer((req, res) => {
             //     trainers : trainers
             // }
             // ↕ raccourci
-            const data = { today, trainers }  
+            const data = { pageCSS, title, today, trainers }  
             // ↑ On fournit un objet qui contient today et notre tableau de formateurs
             // Rendu de la vue
             // renderFile :
@@ -129,11 +130,13 @@ const app = http.createServer((req, res) => {
         if ( requestMethod === 'GET' ) {
             // Contact Papge
             console.log('Bienvenue sur la Contact Page');
-
+            const title = 'Contact';
+            const pageCSS = '/styles/contact.css';
+            const data = {pageCSS, title};
             // Rendu ejs
             // Récupération du chemin vers le fichier ejs
             const filename = path.resolve('views', 'contact.ejs');
-            ejs.renderFile(filename, (err, render) => {
+            ejs.renderFile(filename, data, (err, render) => {
                 if (err) {
                     console.log(err);
                     return;
@@ -178,6 +181,9 @@ const app = http.createServer((req, res) => {
         // console.log(requestUrl);
         if ( requestMethod === 'GET' ) {
             console.log('Bienvenue sur la About Page !');
+            const title = 'À propos';
+
+            const pageCSS = '/styles/about.css';
 
             const person = {   
                 lastName: 'Gérard', 
@@ -186,10 +192,13 @@ const app = http.createServer((req, res) => {
                 birthDate: new Date(1978, 2, 16),
                 cours: ['Algorithme', 'React', 'Node', 'Angular']
             };
+
+
+            const data = { pageCSS, title, person };
                 
 
             const filename = path.resolve('views', 'about.ejs');
-            ejs.renderFile(filename, person, (err, render) => {
+            ejs.renderFile(filename, data, (err, render) => {
                 if (err) {
                     console.log(err);
                     return;

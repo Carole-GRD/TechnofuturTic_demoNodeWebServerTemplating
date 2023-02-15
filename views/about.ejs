@@ -5,19 +5,19 @@
         <img src="/images/person.png" alt="image illustant une personne qui se présente">
     </div>
     
-    <p class="name"> 
-        <%= firstName %> <%= lastName %>
+    <p class="<%= person.gender === 'F' ? 'name-f' : 'name-m' %>"> 
+        <%= person.firstName %> <%= person.lastName %>
     </p>
     
     <p class="bold">Date de naissance : 
         <span> 
-            <%= birthDate.toLocaleDateString() %> 
+            <%= person.birthDate.toLocaleDateString() %> 
         </span>
     </p>
 
     <p class="bold">Cours préférés : </p>
     <ul>
-        <% for(const c of cours) { %>
+        <% for(const c of person.cours) { %>
             <li class="bullet">
                 <span> 
                     <%= c %> 
