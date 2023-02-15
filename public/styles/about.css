@@ -1,6 +1,12 @@
+.presentation-content {
+    width: 50vw;
+    padding: 0 0 2% 5%;
 
+    border-left: 2px solid #c5c5c5;
+    border-bottom: 2px solid #c5c5c5;
+}
 
-.img {
+.img-div {
     display: flex;
     justify-content: center;
     align-items: center;

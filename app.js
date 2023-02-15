@@ -190,7 +190,7 @@ const app = http.createServer((req, res) => {
                 firstName: 'Carole',
                 gender: 'F',
                 birthDate: new Date(1978, 2, 16),
-                cours: ['Algorithme', 'React', 'Node', 'Angular']
+                courses: ['Algorithme', 'React', 'Node', 'Angular']
             };
 
 

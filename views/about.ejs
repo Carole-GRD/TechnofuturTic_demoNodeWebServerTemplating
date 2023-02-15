@@ -1,31 +1,30 @@
 <%- include('./shared/header') %>
 
     <h1>À porpos</h1>
-    <div class="img">
+    <div class="img-div">
         <img src="/images/person.png" alt="image illustant une personne qui se présente">
     </div>
     
-    <p class="<%= person.gender === 'F' ? 'name-f' : 'name-m' %>"> 
-        <%= person.firstName %> <%= person.lastName %>
-    </p>
-    
-    <p class="bold">Date de naissance : 
-        <span> 
-            <%= person.birthDate.toLocaleDateString() %> 
-        </span>
-    </p>
+    <div class="presentation-content">
+        <p class="<%= person.gender === 'F' ? 'name-f' : 'name-m' %>"> 
+            <%= person.firstName %> <%= person.lastName %>
+        </p>
+        
+        <p class="bold">Date de naissance : 
+            <span> 
+                <%= person.birthDate.toLocaleDateString() %> 
+            </span>
+        </p>
 
-    <p class="bold">Cours préférés : </p>
-    <ul>
-        <% for(const c of person.cours) { %>
-            <li class="bullet">
-                <span> 
-                    <%= c %> 
-                </span>
-            </li>
-        <% } %>
-    </ul>
-
-   
-
+        <p class="bold">Cours préférés : </p>
+        <ul>
+            <% for(const course of person.courses) { %>
+                <li class="bullet">
+                    <span> 
+                        <%= course %> 
+                    </span>
+                </li>
+            <% } %>
+        </ul>
+    </div>
 <%- include('./shared/footer') %>
