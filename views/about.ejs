@@ -9,6 +9,13 @@
         <p class="<%= person.gender === 'F' ? 'name-f' : 'name-m' %>"> 
             <%= person.firstName %> <%= person.lastName %>
         </p>
+
+        <!-- <% if (person.gender === 'F') { %>
+            <p class="name-f"><%= person.firstName %> <%= person.lastName %></p>
+        <% } %>
+        <% if (person.gender === 'M') { %>
+            <p class="name-g"><%= person.firstName %> <%= person.lastName %></p>
+        <% } %> -->
         
         <p class="bold">Date de naissance : 
             <span> 
